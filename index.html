@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Code</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;600;900&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0d0d0d;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden;
+            position: relative;
+        }
+        .glitch-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff5500);
+            background-size: 400% 400%;
+            animation: bg-animation 8s infinite alternate;
+            z-index: -1;
+        }
+        @keyframes bg-animation {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+        .container {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        h1 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            color: #ff00ff;
+            text-shadow: 2px 2px 0px #00ffff;
+            animation: glitch 1s infinite;
+        }
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px 0px #00ffff; }
+            50% { text-shadow: -2px -2px 0px #ff5500; }
+            100% { text-shadow: 2px 2px 0px #00ffff; }
+        }
+        input {
+            margin-top: 20px;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            font-size: 1rem;
+            text-align: center;
+            border: 2px solid #ff00ff;
+            background: black;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: #ff00ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border: 2px solid #ff00ff;
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8rem;
+            color: #ff5500;
+        }
+    </style>
+</head>
+<body>
+    <div class="glitch-bg"></div>
+    <div class="container">
+        <h1>Redeem Your Code</h1>
+        <input type="text" id="redeemCode" placeholder="Enter your code here">
+        <button onclick="redeem()">Redeem</button>
+        <p class="footer">&copy; SiuuEditZ&VLine | All rights reserved</p>
+    </div>
+    <div id="popup" class="popup"></div>
+    <script>
+        const redeemed = localStorage.getItem("redeemed") || "";
+        function randomCode() {
+            return Math.random().toString(36).substr(2, 8).toUpperCase();
+        }
+        function redeem() {
+            if (redeemed) {
+                alert("Kamu sudah pernah redeem, hanya bisa 1x.");
+                return;
+            }
+            const code = document.getElementById("redeemCode").value.trim().toUpperCase();
+            const rewards = {
+                "RAMADH4N-2025": "DISKON 20% ALL SCRIPT BOT WA DI SIUUEDITZ",
+                "LEBAR4NKAREEM2025": "DISKON 20% ALL SCRIPT BOT WA DI SIUUEDITZ",
+                "SIUUEDITZXVLINE": "SPECIAL FREE SCRIPT VZTech!",
+                "HOWLER-P5X": "ngapain? Inimah test code doang 🗿",
+                "RORRRR": "RORRRRRRR",
+                "SIUUEDITZ": "NGAPAIN"
+            };
+            if (rewards[code]) {
+                const reward = rewards[code];
+                const randCode = randomCode();
+                document.getElementById("popup").innerHTML = `
+                    <p>Selamat</p>
+                    <p>Kamu mendapatkan <b>${reward}</b> dari code <b>${code}</b></p>
+                    <a href="https://wa.me/?6289608688766text=Halo%20kak%20saya%20mau%20claim%20hadiah%20dari%20web%20VZTech%20${randCode}%20${reward}" 
+                       target="_blank">
+                        <button>Claim</button>
+                    </a>
+                `;
+                document.getElementById("popup").style.display = "block";
+                localStorage.setItem("redeemed", code);
+            } else {
+                alert("Kode tidak valid atau sudah digunakan.");
+            }
+        }
+    </script>
+</body>
+</html>
